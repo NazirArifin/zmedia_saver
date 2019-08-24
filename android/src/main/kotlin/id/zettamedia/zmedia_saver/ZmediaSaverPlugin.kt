@@ -51,32 +51,36 @@ class ProcessImage(
     try {
       val imageFile = File(dir, file)
       val imageUri = Uri.fromFile(imageFile)
-      var bitmap: Bitmap = BitmapFactory.decodeFile(imageUri.path)
       val exif = ExifInterface(imageFile.absolutePath)
+      
       val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-      if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
-        bitmap = rotateBitmap(bitmap, 90)
+      if (orientation != ExifInterface.ORIENTATION_NORMAL) {
+        var bitmap: Bitmap = BitmapFactory.decodeFile(imageUri.path)
+          if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+          bitmap = rotateBitmap(bitmap, 90)
+        }
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+          bitmap = rotateBitmap(bitmap, 180)
+        }
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+          bitmap = rotateBitmap(bitmap, 270)
+        }
+        imageFile.delete()
+        val out = FileOutputStream(imageFile)
+        if (ext == "png") {
+          bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+        } else {
+          bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+        }
+        out.flush()
+        out.close()
       }
-      if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
-        bitmap = rotateBitmap(bitmap, 180)
-      }
-      if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
-        bitmap = rotateBitmap(bitmap, 270)
-      }
-      imageFile.delete()
-      val out = FileOutputStream(imageFile)
-      if (ext == "png") {
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-      } else {
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-      }
-      out.flush()
-      out.close()
 
       val context = registrar.activeContext().applicationContext
       val nImageFile = File(dir, file)
       context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(nImageFile)))
       return true
+    
     } catch (e: IOException) {
       e.printStackTrace()
       return false

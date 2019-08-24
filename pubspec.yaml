@@ -1,8 +1,8 @@
 name: zmedia_saver
-description: Save media file to library
-version: 0.0.1
-author:
-homepage:
+description: After taking picture from camera or from gallery, this plugin can add image path into image library (for Android only)
+version: 0.1.0
+author: Mohammad Nazir Arifin <ceylon.rizan@gmail.com>
+homepage: https://github.com/NazirArifin/zmedia_saver
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
