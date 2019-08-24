@@ -2,13 +2,21 @@
 
 Save media file to library
 
-## Getting Started
+A Flutter plugin for Android (iOS not implemented yet) for adding image path to Image library
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+## Installation
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+First, add ```zmedia_saver``` as dependency in your pubspec.yaml file.
+
+## Example
+
+```dart
+...
+import 'package:zmedia_saver/zmedia_saver.dart';
+
+...
+  Future<void> initPlatformState() async {
+    // you can get image path using path_provider
+    await ZmediaSaver.saveToLibrary('/storage/emulated/0/Pictures/CameraApp/1566620744553.png');
+    ...
+```

@@ -32,7 +32,8 @@ class ZmediaSaverPlugin(private val registrar: Registrar): MethodCallHandler {
     } else if(call.method == "saveToLibrary") {
       val dir = call.argument<String>("directory")
       val file = call.argument<String>("file")
-      val r: Boolean = ProcessImage(dir, file, registrar).execute().get()
+      val ext = call.argument<String>("ext")
+      val r: Boolean = ProcessImage(dir, file, ext, registrar).execute().get()
       result.success(r)
     } else {
       result.notImplemented()
@@ -43,6 +44,7 @@ class ZmediaSaverPlugin(private val registrar: Registrar): MethodCallHandler {
 class ProcessImage(
         private val dir: String?,
         private val file: String?,
+        private val ext: String?,
         private val registrar: Registrar
 ): AsyncTask<Void, Void, Boolean>() {
   override fun doInBackground(vararg params: Void?): Boolean {
@@ -63,7 +65,11 @@ class ProcessImage(
       }
       imageFile.delete()
       val out = FileOutputStream(imageFile)
-      bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+      if (ext == "png") {
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+      } else {
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+      }
       out.flush()
       out.close()
 

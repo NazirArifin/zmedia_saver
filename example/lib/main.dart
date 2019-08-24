@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    await ZmediaSaver.saveToLibrary('/storage/emulated/0/Pictures/CameraApp/1566620744553.png');
+    await ZmediaSaver.saveToLibrary('/storage/emulated/0/Pictures/CameraApp/1566624857932.png');
     
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.

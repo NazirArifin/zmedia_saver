@@ -14,7 +14,8 @@ class ZmediaSaver {
     final Directory theDir = theFile.parent;
     final Map<String, String> params = <String, String> {
       "directory": theDir.path,
-      "file": basename(filePath)
+      "file": basename(filePath),
+      "ext": extension(filePath).toLowerCase()
     };
     if (await PermissionHandler().checkPermissionStatus(PermissionGroup.storage) == PermissionStatus.denied) {
       await PermissionHandler().requestPermissions([PermissionGroup.storage]);
