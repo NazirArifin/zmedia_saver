@@ -6,7 +6,24 @@ A Flutter plugin for Android (iOS not implemented yet) for adding image path to 
 
 ## Installation
 
-First, add ```zmedia_saver``` as dependency in your pubspec.yaml file.
+First, add ```zmedia_saver``` as [dependency in your pubspec.yaml](https://flutter.io/platform-plugins/) file.
+
+### iOS
+
+Not implemented
+
+### Android
+
+Add permission into your ```android/src/main/AndroidManifest.xml```:
+
+```xml
+...
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+...
+```
 
 ## Example
 
